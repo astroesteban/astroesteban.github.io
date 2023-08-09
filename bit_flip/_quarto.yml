@@ -9,12 +9,8 @@ website:
     right:
       - text: Blog
         href: blog.qmd 
-      - icon: github
-        href: https://github.com/astroesteban
-      - icon: twitter
-        href: https://twitter.com/astroesteban
-      - icon: linkedin
-        href: https://www.linkedin.com/in/estebanduran
+      - text: Archive
+        href: archive.qmd
 
 format:
   html:
