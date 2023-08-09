@@ -1,5 +1,5 @@
 ---
-title: "About"
+title: "The Bit Flip"
 image: profile.jpg
 about:
   template: jolla
@@ -12,4 +12,14 @@ about:
       href: https://www.linkedin.com/in/estebanduran
 ---
 
-About this blog
+## About Me
+
+Hola, I'm Esteban Duran 👋
+
+I am a spacecraft software engineer and all around space geek. I am a first-gen
+Mexican-American originally from space city, Houston. I am interested and
+currently working on spacecraft autonomy and flight software for a variety
+of missions. More specifically, I am interested in exploring how artificial
+intelligence can make our spacecraft more capable so that we may explore deeper
+and further into the cosmos. This blog is intended to be an outlet for discoveries and musings
+spacecraft autonomy, flight software, and any other tools which interest me.

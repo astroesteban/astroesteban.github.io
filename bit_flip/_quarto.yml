@@ -1,10 +1,15 @@
 project:
   type: website
 
+execute:
+  freeze: auto
+
 website:
   title: "The Bit Flip" 
   site-url:  https://astroesteban.github.io
   description: "Musings on spacecraft autonomy and flight software"
+  favicon: favicon/favicon.ico
+  image: rocket.png
   navbar:
     right:
       - text: Blog
