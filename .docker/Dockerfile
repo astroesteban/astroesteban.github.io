@@ -3,6 +3,8 @@ FROM ubuntu:${VARIANT} AS base
 
 # disable prompting during package installation
 ARG DEBIAN_FRONTEND=noninteractive
+ARG QUARTO_VERSION=1.3.450
+ARG QUARTO_URL=https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.deb
 
 RUN apt-get update && apt-get -y upgrade \
   && apt-get install -y --no-install-recommends \
@@ -28,7 +30,7 @@ RUN ln -s /run/secrets/ssh_public_key ~/.ssh/id_ed25519_github.pub && \
    ln -s /run/secrets/gitconfig ~/.gitconfig
 
 # Install Quarto
-RUN axel -n $(nproc) https://github.com/quarto-dev/quarto-cli/releases/download/v1.3.450/quarto-1.3.450-linux-amd64.deb -o quarto.deb \
+RUN axel -n $(nproc) ${QUARTO_URL} -o quarto.deb \
   && dpkg -i "quarto.deb" \
   && rm quarto.deb
 
