@@ -1,0 +1,11 @@
+{
+  "hash": "996aa837606ded69d922ff477b380657",
+  "result": {
+    "markdown": "---\ntitle: Star vs Galaxy Classification\ndate: '2023-08-10'\ncategories:\n  - Machine Learning\n---\n\n# Introduction\n\n",
+    "supporting": [
+      "star_galaxy_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}
