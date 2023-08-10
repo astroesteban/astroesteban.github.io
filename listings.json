@@ -2,13 +2,13 @@
   {
     "listing": "/blog.html",
     "items": [
-      "/posts/welcome/welcome.html"
+      "/posts/star_galaxy/star_galaxy.html"
     ]
   },
   {
     "listing": "/archive.html",
     "items": [
-      "/posts/welcome/welcome.html"
+      "/posts/star_galaxy/star_galaxy.html"
     ]
   }
 ]

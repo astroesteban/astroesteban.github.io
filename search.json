@@ -4,28 +4,21 @@
     "href": "blog.html",
     "title": "AstroEsteban",
     "section": "",
-    "text": "This is a dummy blog posts\n\n\n\n\n\n\n\n123\n\n\nSecond Tag\n\n\n\n\nThis is a test post. In this post, I try out different functionalities\n\n\n\n\n\n\nJun 1, 2022\n\n\nEsteban Duran\n\n\n\n\n\n\nNo matching items"
+    "text": "Star vs Galaxy Classification\n\n\n\n\n\n\n\nMachine Learning\n\n\n\n\n\n\n\n\n\n\n\nAug 10, 2023\n\n\nEsteban Duran\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "archive.html",
     "href": "archive.html",
     "title": "Archive",
     "section": "",
-    "text": "This is a dummy blog posts\n\n\n\n\n\n\n\n\n\nJun 1, 2022\n\n\n\n\n\n\nNo matching items"
+    "text": "Star vs Galaxy Classification\n\n\n\n\n\n\n\n\n\nAug 10, 2023\n\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "posts/welcome/welcome.html",
-    "href": "posts/welcome/welcome.html",
-    "title": "This is a dummy blog posts",
+    "objectID": "posts/star_galaxy/star_galaxy.html",
+    "href": "posts/star_galaxy/star_galaxy.html",
+    "title": "Star vs Galaxy Classification",
     "section": "",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam suscipit est nec dui eleifend, at dictum elit ullamcorper. Aliquam feugiat dictum bibendum. Praesent fermentum laoreet quam, cursus volutpat odio dapibus in. Fusce luctus porttitor vehicula. Donec ac tortor nisi. Donec at lectus tortor. Morbi tempor, nibh non euismod viverra, metus arcu aliquet elit, sed fringilla urna leo vel purus.\n\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nam suscipit est nec dui eleifend, at dictum elit ullamcorper. Aliquam feugiat dictum bibendum. Praesent fermentum laoreet quam, cursus volutpat odio dapibus in. Fusce luctus porttitor vehicula. Donec ac tortor nisi. Donec at lectus tortor. Morbi tempor, nibh non euismod viverra, metus arcu aliquet elit, sed fringilla urna leo vel purus."
-  },
-  {
-    "objectID": "posts/welcome/welcome.html#merriweather",
-    "href": "posts/welcome/welcome.html#merriweather",
-    "title": "This is a dummy blog posts",
-    "section": "",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam suscipit est nec dui eleifend, at dictum elit ullamcorper. Aliquam feugiat dictum bibendum. Praesent fermentum laoreet quam, cursus volutpat odio dapibus in. Fusce luctus porttitor vehicula. Donec ac tortor nisi. Donec at lectus tortor. Morbi tempor, nibh non euismod viverra, metus arcu aliquet elit, sed fringilla urna leo vel purus."
+    "text": "Introduction"
   },
   {
     "objectID": "index.html",
