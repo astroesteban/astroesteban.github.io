@@ -5,7 +5,7 @@ execute:
   freeze: auto
 
 website:
-  title: "The Bit Flip" 
+  title: "AstroEsteban" 
   site-url:  https://astroesteban.github.io
   description: "Musings on spacecraft autonomy and flight software"
   favicon: favicon/favicon.ico
