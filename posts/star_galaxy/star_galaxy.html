@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -108,6 +142,22 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#environment-setup" id="toc-environment-setup" class="nav-link" data-scroll-target="#environment-setup">Environment Setup</a></li>
+  <li><a href="#downloading-the-data" id="toc-downloading-the-data" class="nav-link" data-scroll-target="#downloading-the-data">Downloading the Data</a></li>
+  <li><a href="#exploratory-data-analysis-eda" id="toc-exploratory-data-analysis-eda" class="nav-link" data-scroll-target="#exploratory-data-analysis-eda">Exploratory Data Analysis (EDA)</a>
+  <ul class="collapse">
+  <li><a href="#create-the-fast.ai-dataloader" id="toc-create-the-fast.ai-dataloader" class="nav-link" data-scroll-target="#create-the-fast.ai-dataloader">Create the Fast.AI DataLoader</a></li>
+  </ul></li>
+  <li><a href="#training-the-model" id="toc-training-the-model" class="nav-link" data-scroll-target="#training-the-model">Training the Model</a>
+  <ul class="collapse">
+  <li><a href="#analyze-the-results" id="toc-analyze-the-results" class="nav-link" data-scroll-target="#analyze-the-results">Analyze the Results</a></li>
+  </ul></li>
+  <li><a href="#improving-our-results" id="toc-improving-our-results" class="nav-link" data-scroll-target="#improving-our-results">Improving Our Results</a>
+  <ul class="collapse">
+  <li><a href="#switch-to-crossentropyloss" id="toc-switch-to-crossentropyloss" class="nav-link" data-scroll-target="#switch-to-crossentropyloss">Switch to CrossEntropyLoss</a></li>
+  </ul></li>
+  <li><a href="#test" id="toc-test" class="nav-link" data-scroll-target="#test">Test</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -146,8 +196,368 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Hey everyone! For my first ever post I wanted to start off with demonstrating how I trained a relatively simple neural network on a small dataset of star and galaxy image data. The dataset, <a href="https://www.kaggle.com/datasets/divyansh22/dummy-astronomy-data">Star-Galaxy Classification Data</a> was collected from an observatory situated in Devasthal, Nainital, India. Overall the dataset consists of approximately 4,000 images of stars and galaxies. All of the images have been resized to a 64x64 cutout to facilitate training of classification algorithms.</p>
+<p>In this post I also utilize the <a href="https://www.fast.ai">Fast.AI</a> library which provides a simple and intuitive abstraction over PyTorch. It makes data science much easier.</p>
+<p>Now, lets jump into it and begin by setting up our environment.</p>
+</section>
+<section id="environment-setup" class="level2">
+<h2 class="anchored" data-anchor-id="environment-setup">Environment Setup</h2>
+<p>The first thing we want to do is setup our development environment and import the libraries that we need.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import all the modules we will need</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> fastbook</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastbook <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastai.vision.<span class="bu">all</span> <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastcore.<span class="bu">all</span> <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the display options of PyTorch so that it renders better in Jupyter</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>torch.set_printoptions(linewidth<span class="op">=</span><span class="dv">140</span>, sci_mode<span class="op">=</span><span class="va">False</span>, edgeitems<span class="op">=</span><span class="dv">7</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the Seaborn theme</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>sns.set_theme()</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># ! We need this to get some of the training output to work. This will be fixed</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># in a future release of Jupyter for VS Code.</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># https://github.com/microsoft/vscode-jupyter/pull/13442#issuecomment-1541584881</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> clear_output, display, DisplayHandle, Image</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> update_patch(<span class="va">self</span>, obj):</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    clear_output(wait<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.display(obj)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>DisplayHandle.update <span class="op">=</span> update_patch</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The two key libraries that we import above are the <code>fastai</code> and <code>torch</code> libraries which provide all of the deep learning goodies. We also import <code>fastbook</code> which provides some neat features for Jupyter Notebook development. Lastly, we configure the Jupyter Notebook to dynamically update output so that we can see it correctly in Visual Studio Code.</p>
+<p>That’s all we need to dowload our data and begin training our neural network.</p>
+</section>
+<section id="downloading-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="downloading-the-data">Downloading the Data</h2>
+<p>Now that we have all of our packages imported and our notebook set up, we can proceed with downloading our data from Kaggle.</p>
+<p>We can start by setting the path to the dataset we will dowload:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dataset_name <span class="op">=</span> <span class="st">"divyansh22/dummy-astronomy-data"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dataset_path <span class="op">=</span> URLs.path(dataset_name)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Path.BASE_PATH <span class="op">=</span> dataset_path</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You should see the path set to:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Path</span><span class="er">(</span><span class="st">'/root/.fastai/archive/dummy-astronomy-data'</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now we can actually download the data:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download the dataset to a hidden folder and extract it from kaggle</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> dataset_path.exists() <span class="kw">or</span> <span class="kw">not</span> <span class="bu">any</span>(Path(dataset_path).iterdir()):</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> kaggle</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    dataset_path.mkdir(parents<span class="op">=</span><span class="va">True</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    kaggle.api.dataset_download_cli(dataset_name, path<span class="op">=</span>dataset_path, unzip<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You should see that our <code>dataset_path</code> contains the following folders:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[Path</span><span class="er">(</span><span class="st">'star'</span><span class="kw">)</span><span class="ex">,Path</span><span class="er">(</span><span class="st">'galaxy'</span><span class="kw">)</span><span class="ex">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The data is inside of a “Cutout Files” folder. We want to move the files that are in there to be directly beneath the “dummy-astronomy-data” folder.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> Path(dataset_path <span class="op">/</span> <span class="st">"star"</span>).is_dir():</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    shutil.move(Path(dataset_path <span class="op">/</span> <span class="st">"Cutout Files"</span> <span class="op">/</span> <span class="st">"galaxy"</span>), dataset_path)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    shutil.move(Path(dataset_path <span class="op">/</span> <span class="st">"Cutout Files"</span> <span class="op">/</span> <span class="st">"star"</span>), dataset_path)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    shutil.rmtree(Path(dataset_path <span class="op">/</span> <span class="st">"Cutout Files"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To make our lives easier later on we will also create two <code>Path</code> variables that point to our galaxy and star images.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>galaxy_data_folder <span class="op">=</span> dataset_path <span class="op">/</span> <span class="st">"galaxy"</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>star_data_folder <span class="op">=</span> dataset_path <span class="op">/</span> <span class="st">"star"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="exploratory-data-analysis-eda" class="level2">
+<h2 class="anchored" data-anchor-id="exploratory-data-analysis-eda">Exploratory Data Analysis (EDA)</h2>
+<p>Now that we have our data we can begin exploring, analyzing, and visualizing our data.</p>
+<p>Lets start by taking a look at how many samples we have of each class (star, and galaxy) and how many we have in total.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/num_images.png" title="Number of galaxy vs star images" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">The bar graph shows there are approximately 3 times more star images than galaxy images</figcaption>
+</figure>
+</div>
+<p>We can see that we have about three times more star images than galaxy images. This is a pretty significant bias in our dataset that can, and most likely will, impact the performance of our model. Later on we will implement one technique to help aleviate some of this bias.</p>
+<p>Lets now actually take a look at an image from each of the two classes.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>galaxy_img <span class="op">=</span> galaxy_data_folder <span class="op">/</span> Path(galaxy_data_folder.ls()[<span class="dv">0</span>])</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>star_img <span class="op">=</span> star_data_folder <span class="op">/</span> Path(star_data_folder.ls()[<span class="dv">0</span>])</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>display(Image(filename<span class="op">=</span>galaxy_img)), display(Image(filename<span class="op">=</span>star_img))<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Galaxy</th>
+<th style="text-align: center;">Star</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><img src="images/galaxy.jpg" class="img-fluid"></td>
+<td style="text-align: center;"><img src="images/star.jpg" class="img-fluid"></td>
+</tr>
+</tbody>
+</table>
+<p>To the untrained eye these images can appear as just pixelated noise. In reality these images contain some of the most astounding objects in our universe. A neural network should be able to distinguish the two after some training.</p>
+<section id="create-the-fast.ai-dataloader" class="level3">
+<h3 class="anchored" data-anchor-id="create-the-fast.ai-dataloader">Create the Fast.AI DataLoader</h3>
+<p>Now that we have our data prepared we can proceed to creating a <code>DataLoader</code> object. This object will be used to load our data and pass it into our model for training.</p>
+<p>But before we do that lets actually move an image as a holdout to do a quick test after training.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>test_folder <span class="op">=</span> Path(dataset_path <span class="op">/</span> <span class="st">".."</span> <span class="op">/</span> <span class="st">"test"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> test_folder.exists():</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    test_folder.mkdir()</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    test_image <span class="op">=</span> galaxy_data_folder <span class="op">/</span> galaxy_data_folder.ls()[<span class="dv">0</span>]</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    shutil.move(test_image, Path(test_folder <span class="op">/</span> <span class="st">"galaxy.jpg"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now we can create our <code>DataLoader</code> object. The <a href="https://docs.fast.ai/data.load.html">DataLoader</a> class provided by Fast.AI is essentially a wrapper around the PyTorch <a href="https://pytorch.org/tutorials/beginner/basics/data_tutorial.html">DataLoader</a> that provides additional features and nice abstractions like automatic training and validation splits.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># With Fast.AI we can easily create a DataLoader via the Datablock</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>data_loader <span class="op">=</span> DataBlock(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    blocks<span class="op">=</span>(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        ImageBlock,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        CategoryBlock,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    ),  <span class="co"># the inputs to our model are images and the outputs are categories</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    get_items<span class="op">=</span>get_image_files,  <span class="co"># to find the inputs to our model run the get_image_files function</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    splitter<span class="op">=</span>RandomSplitter(</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        valid_pct<span class="op">=</span><span class="fl">0.2</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    ),  <span class="co"># split the data into training and validation, 20% of which is for validation</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    get_y<span class="op">=</span>parent_label,</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    batch_tfms<span class="op">=</span>aug_transforms(</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>        size<span class="op">=</span><span class="dv">64</span>, flip_vert<span class="op">=</span><span class="va">True</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    ),  <span class="co"># we also apply some image augmentations</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>).dataloaders(dataset_path, bs<span class="op">=</span><span class="dv">32</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>DataLoader</code> object we created also shows you a batch of data. Lets take a look:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>data_loader.show_batch(max_n<span class="op">=</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/batch.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">A batch of star and galaxy images</figcaption>
+</figure>
+</div>
+<p>Another great feature of FastAI’s <code>DataLoader</code> class is that it provides a set of industry-standard image augmentations. These augmentations, like horizontal flip or random crop, essentially provide “free” data for your model to train on. This will be crucial given the limited number of samples we have for galaxy images.</p>
+</section>
+</section>
+<section id="training-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="training-the-model">Training the Model</h2>
+<p>Now that we have our data loaded into a <code>DataLoader</code> and split into training and validation we can begin training some models!</p>
+<p>First we need to define some hyperparameters. Hyperparameters are like the high-level knobs that control how your model trains. We’ll start with defining the epochs, which is the number of rounds the model should train on the full data.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>EPOCHS: <span class="bu">int</span> <span class="op">=</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We’re also gonna be training two models. A baseline ResNet18 and a ConvNeXt model. Additionally, we’ll be using accuracy as our metric to evaluate the performance of our models.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A learner is just a wrapper around the model, data loader and metrics</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>resnet_learner <span class="op">=</span> vision_learner(data_loader, <span class="st">"resnet18"</span>, metrics<span class="op">=</span>accuracy)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>convnext_learner <span class="op">=</span> vision_learner(data_loader, <span class="st">"convnext_tiny.fb_in22k"</span>, metrics<span class="op">=</span>accuracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You’ll notice that we made a <a href="https://docs.fast.ai/vision.learner.html">vision_learner</a> instance instead of a straight neural network instance. A <code>vision_learner</code> is another class provided by FastAI that essentially bundles the model architecture, the data loader, and the metrics. This abstraction facilitates training and evaluation of our models.</p>
+<p>Now lets fine tune our two models!</p>
+<p>Wait a minute! What do I mean by “fine tune”? Are we not supposed to be training? Great catch! What we are actually going to be doing is something called <a href="https://en.wikipedia.org/wiki/Transfer_learning">transfer learning</a>. Transfer learning takes a pre-trained model and trains the very last layer on our new data. This technique helps improve performance where data is limited.</p>
+<p>Lets start by fine-tuning our Resnet18 model:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>resnet_learner.fine_tune(EPOCHS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<thead>
+<tr class="header">
+<th>epoch</th>
+<th>train_loss</th>
+<th>valid_loss</th>
+<th>accuracy</th>
+<th>time</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0.763895</td>
+<td>0.506514</td>
+<td>0.767880</td>
+<td>00:54</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>0.664355</td>
+<td>0.492379</td>
+<td>0.785445</td>
+<td>00:57</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>0.608526</td>
+<td>0.466246</td>
+<td>0.787955</td>
+<td>00:57</td>
+</tr>
+</tbody>
+</table>
+<p>An accuracy of 79%. Not too bad given the small dataset we are working with. Lets see if our ConvNeXt model does any better.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>convnext_learner.fine_tune(EPOCHS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<thead>
+<tr class="header">
+<th>epoch</th>
+<th>train_loss</th>
+<th>valid_loss</th>
+<th>accuracy</th>
+<th>time</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0.573735</td>
+<td>0.393918</td>
+<td>0.855709</td>
+<td>02:30</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>0.497023</td>
+<td>0.299768</td>
+<td>0.882058</td>
+<td>02:34</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>0.414366</td>
+<td>0.297912</td>
+<td>0.888331</td>
+<td>02:35</td>
+</tr>
+</tbody>
+</table>
+<p>Our ConvNeXt model has an accuracy of 89%. This isn’t all too surprising given that the ConvNeXt architecture is deeper and more complex than the simple Resnet18 architecture.</p>
+<section id="analyze-the-results" class="level3">
+<h3 class="anchored" data-anchor-id="analyze-the-results">Analyze the Results</h3>
+<p>With the <code>vision_learner</code> we can also take a look at the confusion matrix which is a handy visualization tool to understand model performance.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>class_interp <span class="op">=</span> ClassificationInterpretation.from_learner(convnext_learner)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>class_interp.plot_confusion_matrix()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/confusion_matrix.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">The Confusion Matrix</figcaption>
+</figure>
+</div>
+<p>Basically everything in the diagonal was classified correctly. We can see that it classified 44 images as galaxies when they were actually stars and 45 images as stars when they were actually galaxies.</p>
+<p>Lets also take a look at the top losses i.e.&nbsp;the images the model had the most difficult time classifying.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>class_interp.plot_top_losses(<span class="dv">4</span>, nrows<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/top_losses.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Top Losses</figcaption>
+</figure>
+</div>
+<p>And we can also take a look at the classification report.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>class_interp.print_classification_report()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>precision</th>
+<th>recall</th>
+<th>f1-score</th>
+<th>support</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>galaxy</td>
+<td>0.75</td>
+<td>0.74</td>
+<td>0.75</td>
+<td>176</td>
+</tr>
+<tr class="even">
+<td>star</td>
+<td>0.93</td>
+<td>0.93</td>
+<td>0.93</td>
+<td>621</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>accuracy</td>
+<td></td>
+<td></td>
+<td>0.89</td>
+<td>797</td>
+</tr>
+<tr class="odd">
+<td>macro avg</td>
+<td>0.84</td>
+<td>0.84</td>
+<td>0.84</td>
+<td>797</td>
+</tr>
+<tr class="even">
+<td>weighted avg</td>
+<td>0.89</td>
+<td>0.89</td>
+<td>0.89</td>
+<td>797</td>
+</tr>
+</tbody>
+</table>
+<p>In the classification report we can again see again that the performance is much better in classifying stars over galaxies. The imbalances of the dataset are showing. The F1 Score demonstrates an approximate 0.2 difference in performance between the two classes. Also precision and recall are much better for stars than they are for galaxies.</p>
+</section>
+</section>
+<section id="improving-our-results" class="level2">
+<h2 class="anchored" data-anchor-id="improving-our-results">Improving Our Results</h2>
+<p>In our first round of experiments we saw that our ConvNeXt model was able to achieve ~88% accuracy. However, the model’s performance on the galaxy samples was significantly less than the stars. This is due to the significant class imbalance. A class imbalance can significantly degrade model performance.</p>
+<p>In this section we will implement a couple of techniques to fix the class imbalance to improve our model’s performance.</p>
+<section id="switch-to-crossentropyloss" class="level3">
+<h3 class="anchored" data-anchor-id="switch-to-crossentropyloss">Switch to CrossEntropyLoss</h3>
+<p>One way that we can improve our performance is by using the <a href="https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html">CrossEntropyLoss</a>.</p>
+<p>This loss assigns weights to the classes to help even out an unbalanced dataset. After a bit of playing around with pairs of weights I found that a weight of 0.8 and 0.2 provided really good results.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>weight <span class="op">=</span> torch.tensor((<span class="fl">0.80</span>, <span class="fl">0.20</span>))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the loss function as the CrossEntropyLoss </span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>convnext_learner.loss_fn <span class="op">=</span> nn.CrossEntropyLoss(weight<span class="op">=</span>weight)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now we can fine-tune our model with CrossEntropyLoss.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>convnext_learner.fine_tune(EPOCHS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<table class="table">
+<thead>
+<tr class="header">
+<th>epoch</th>
+<th>train_loss</th>
+<th>valid_loss</th>
+<th>accuracy</th>
+<th>time</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0.279058</td>
+<td>0.277570</td>
+<td>0.880803</td>
+<td>02:45</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>0.267582</td>
+<td>0.279332</td>
+<td>0.890841</td>
+<td>02:37</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>0.252669</td>
+<td>0.230112</td>
+<td>0.917189</td>
+<td>02:46</td>
+</tr>
+</tbody>
+</table>
+<p>Wow! We can see that CrossEntropyLoss got our model accuracy to 92%! That is not bad given the very small and imbalanced nature of our dataset.</p>
+</section>
+</section>
+<section id="test" class="level2">
+<h2 class="anchored" data-anchor-id="test">Test</h2>
+<p>Remember that holdout galaxy image we set aside? Lets now grab it and make a prediction on it to do a quick test of our model.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> []</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>is_galaxy, _, probs <span class="op">=</span> convnext_learner.predict(Path(test_folder <span class="op">/</span> <span class="st">"galaxy.jpg"</span>))</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(is_galaxy, probs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">galaxy</span> TensorBase<span class="er">(</span><span class="ex">[0.7543,</span> 0.2457]<span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>In this post I walked you thorugh training a simple neural network on a very small dataset of approxmiately 4,000 images. We ended up getting some pretty decent results of ~92% accuracy. Not too bad given the constraints we were working with.</p>
+<p>Thanks for reading and checkout the accompanying <a href="https://github.com/astroesteban/star-galaxy-classification">repo</a> to run the source code.</p>
 
 
 </section>
