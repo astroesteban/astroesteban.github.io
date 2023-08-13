@@ -4,14 +4,14 @@
     "href": "blog.html",
     "title": "AstroEsteban",
     "section": "",
-    "text": "Star vs Galaxy Classification\n\n\n\n\n\n\n\nMachine Learning\n\n\n\n\n\n\n\n\n\n\n\nAug 10, 2023\n\n\nEsteban Duran\n\n\n\n\n\n\nNo matching items"
+    "text": "PyTorch, Meet NASA F´\n\n\n\n\n\n\n\nMachine Learning\n\n\nFlight Software\n\n\nFPrime\n\n\n\n\n\n\n\n\n\n\n\nAug 13, 2023\n\n\nEsteban Duran\n\n\n\n\n\n\n  \n\n\n\n\nStar vs Galaxy Classification\n\n\n\n\n\n\n\nMachine Learning\n\n\n\n\n\n\n\n\n\n\n\nAug 10, 2023\n\n\nEsteban Duran\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "archive.html",
     "href": "archive.html",
     "title": "Archive",
     "section": "",
-    "text": "Star vs Galaxy Classification\n\n\n\n\n\n\n\n\n\nAug 10, 2023\n\n\n\n\n\n\nNo matching items"
+    "text": "PyTorch, Meet NASA F´\n\n\n\n\n\n\n\n\n\nAug 13, 2023\n\n\n\n\n\n\n\n\nStar vs Galaxy Classification\n\n\n\n\n\n\n\n\n\nAug 10, 2023\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/star_galaxy/star_galaxy.html",
@@ -75,6 +75,34 @@
     "title": "Star vs Galaxy Classification",
     "section": "Conclusion",
     "text": "Conclusion\nIn this post I walked you thorugh training a simple neural network on a very small dataset of approxmiately 4,000 images. We ended up getting some pretty decent results of ~92% accuracy. Not too bad given the constraints we were working with.\nThanks for reading and checkout the accompanying repo to run the source code."
+  },
+  {
+    "objectID": "posts/fprime_pytorch/fprime_pytorch.html",
+    "href": "posts/fprime_pytorch/fprime_pytorch.html",
+    "title": "PyTorch, Meet NASA F´",
+    "section": "",
+    "text": "Lately I’ve been working on quite a few research projects whose aim is to integrate deep learning models like convolutional neural networks into safety-critical flight software. Artificial intelligence, and deep learning specifically, can unlock numerous capabilities for spacecraft mission objectives."
+  },
+  {
+    "objectID": "posts/fprime_pytorch/fprime_pytorch.html#introduction",
+    "href": "posts/fprime_pytorch/fprime_pytorch.html#introduction",
+    "title": "PyTorch, Meet NASA F´",
+    "section": "",
+    "text": "Lately I’ve been working on quite a few research projects whose aim is to integrate deep learning models like convolutional neural networks into safety-critical flight software. Artificial intelligence, and deep learning specifically, can unlock numerous capabilities for spacecraft mission objectives."
+  },
+  {
+    "objectID": "posts/fprime_pytorch/fprime_pytorch.html#environment-setup",
+    "href": "posts/fprime_pytorch/fprime_pytorch.html#environment-setup",
+    "title": "PyTorch, Meet NASA F´",
+    "section": "Environment Setup",
+    "text": "Environment Setup"
+  },
+  {
+    "objectID": "posts/fprime_pytorch/fprime_pytorch.html#mission-planning",
+    "href": "posts/fprime_pytorch/fprime_pytorch.html#mission-planning",
+    "title": "PyTorch, Meet NASA F´",
+    "section": "Mission Planning",
+    "text": "Mission Planning\n\nDefine the Objective\n\n\nCreate the Requirements\n\n\nDesign the Topology"
   },
   {
     "objectID": "index.html",

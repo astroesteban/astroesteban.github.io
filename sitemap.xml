@@ -2,18 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://astroesteban.github.io/blog.html</loc>
-    <lastmod>2023-08-13T19:27:00.508Z</lastmod>
+    <lastmod>2023-08-13T23:26:41.289Z</lastmod>
   </url>
   <url>
     <loc>https://astroesteban.github.io/archive.html</loc>
-    <lastmod>2023-08-13T19:26:59.833Z</lastmod>
+    <lastmod>2023-08-13T23:26:40.517Z</lastmod>
   </url>
   <url>
     <loc>https://astroesteban.github.io/posts/star_galaxy/star_galaxy.html</loc>
-    <lastmod>2023-08-13T19:26:59.430Z</lastmod>
+    <lastmod>2023-08-13T23:26:39.754Z</lastmod>
+  </url>
+  <url>
+    <loc>https://astroesteban.github.io/posts/fprime_pytorch/fprime_pytorch.html</loc>
+    <lastmod>2023-08-13T23:26:40.080Z</lastmod>
   </url>
   <url>
     <loc>https://astroesteban.github.io/index.html</loc>
-    <lastmod>2023-08-13T19:27:00.127Z</lastmod>
+    <lastmod>2023-08-13T23:26:40.816Z</lastmod>
   </url>
 </urlset>

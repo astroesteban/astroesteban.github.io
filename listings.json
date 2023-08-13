@@ -2,12 +2,14 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/fprime_pytorch/fprime_pytorch.html",
       "/posts/star_galaxy/star_galaxy.html"
     ]
   },
   {
     "listing": "/archive.html",
     "items": [
+      "/posts/fprime_pytorch/fprime_pytorch.html",
       "/posts/star_galaxy/star_galaxy.html"
     ]
   }
