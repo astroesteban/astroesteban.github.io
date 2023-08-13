@@ -19,4 +19,4 @@ website:
 
 format:
   html:
-    theme: theme.scss
+    theme: spacelab
