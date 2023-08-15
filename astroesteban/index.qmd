@@ -23,3 +23,10 @@ of missions. More specifically, I am interested in exploring how artificial
 intelligence can make our spacecraft more capable so that we may explore deeper
 and further into the cosmos. This blog is intended to be an outlet for discoveries and musings
 spacecraft autonomy, flight software, and any other tools which interest me.
+
+## My Journey
+
+* **Senior Flight Software Engineer**, _Emergent Space Technologies_, 2020-Present
+* **Flight Software Engineer**, _Firefly Aerospace_, 2018-2020
+* **Artificial Intelligence Engineer Intern**, _NASA's Johnson Space Center_, 2018
+* **Autonomous Systems Engineer Intern**, _NASA's Stennis Space Center_, 2016
