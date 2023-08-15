@@ -81,14 +81,14 @@
     "href": "posts/fprime_pytorch/fprime_pytorch.html",
     "title": "PyTorch, Meet NASA F´",
     "section": "",
-    "text": "Lately I’ve been working on quite a few research projects whose aim is to integrate deep learning models like convolutional neural networks into safety-critical flight software. Artificial intelligence, and deep learning specifically, can unlock numerous capabilities for spacecraft mission objectives."
+    "text": "Lately I’ve been working on quite a few research projects whose aim is to integrate deep learning models like convolutional neural networks into safety-critical flight software. Artificial intelligence, and deep learning specifically, can unlock numerous capabilities for spacecraft mission objectives.\nRecently, I was reading the book “AI at the Edge” by Daniel Situnayake and Jenny Plunkett. In the book they mention an amazing tool created by Jeff Bier, BLERP. This tool consists of five words:\n\nBandwidth\nLatency\nEconomics\nReliability\nPrivacy\n\nAs our spacecraft explore increasingly remote regions of our solar system the need for advanced autonomy increases. It can be easy to use the BLERP tool and realize that deploying AI on spacecraft makes a lot of sense. Our spacecraft will need to make intelligent decisions in real-time when they are far away from Earth making communication difficult, slow, or impossible.\nSo with that I wanted to integrate the popular deep learning framework, PyTorch, with the NASA F´ flight software framework. The F´ framework was developed by NASA’s Jet Propulsion Lab for small spacecraft and the Ingenuity Mars Helicopter project."
   },
   {
     "objectID": "posts/fprime_pytorch/fprime_pytorch.html#introduction",
     "href": "posts/fprime_pytorch/fprime_pytorch.html#introduction",
     "title": "PyTorch, Meet NASA F´",
     "section": "",
-    "text": "Lately I’ve been working on quite a few research projects whose aim is to integrate deep learning models like convolutional neural networks into safety-critical flight software. Artificial intelligence, and deep learning specifically, can unlock numerous capabilities for spacecraft mission objectives."
+    "text": "Lately I’ve been working on quite a few research projects whose aim is to integrate deep learning models like convolutional neural networks into safety-critical flight software. Artificial intelligence, and deep learning specifically, can unlock numerous capabilities for spacecraft mission objectives.\nRecently, I was reading the book “AI at the Edge” by Daniel Situnayake and Jenny Plunkett. In the book they mention an amazing tool created by Jeff Bier, BLERP. This tool consists of five words:\n\nBandwidth\nLatency\nEconomics\nReliability\nPrivacy\n\nAs our spacecraft explore increasingly remote regions of our solar system the need for advanced autonomy increases. It can be easy to use the BLERP tool and realize that deploying AI on spacecraft makes a lot of sense. Our spacecraft will need to make intelligent decisions in real-time when they are far away from Earth making communication difficult, slow, or impossible.\nSo with that I wanted to integrate the popular deep learning framework, PyTorch, with the NASA F´ flight software framework. The F´ framework was developed by NASA’s Jet Propulsion Lab for small spacecraft and the Ingenuity Mars Helicopter project."
   },
   {
     "objectID": "posts/fprime_pytorch/fprime_pytorch.html#environment-setup",
@@ -117,5 +117,12 @@
     "title": "AstroEsteban",
     "section": "",
     "text": "Hola, I’m Esteban Duran 👋\nI am a spacecraft software engineer and all around space geek. I am a first-gen Mexican-American originally from space city, Houston. I am interested and currently working on spacecraft autonomy and flight software for a variety of missions. More specifically, I am interested in exploring how artificial intelligence can make our spacecraft more capable so that we may explore deeper and further into the cosmos. This blog is intended to be an outlet for discoveries and musings spacecraft autonomy, flight software, and any other tools which interest me."
+  },
+  {
+    "objectID": "index.html#my-journey",
+    "href": "index.html#my-journey",
+    "title": "AstroEsteban",
+    "section": "My Journey",
+    "text": "My Journey\nSenior Flight Software Engineer, Emergent Space Technologies, 2020-Present\nFlight Software Engineer, Firefly Aerospace, 2018-2020\nArtificial Intelligence Engineer Intern, NASA’s Johnson Space Center, 2018\nAutonomous Systems Engineer Intern, NASA’s Stennis Space Center, 2016"
   }
 ]

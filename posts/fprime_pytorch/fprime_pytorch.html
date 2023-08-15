@@ -158,6 +158,16 @@ ul.task-list li input[type="checkbox"] {
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>Lately I’ve been working on quite a few research projects whose aim is to integrate deep learning models like convolutional neural networks into safety-critical flight software. Artificial intelligence, and deep learning specifically, can unlock numerous capabilities for spacecraft mission objectives.</p>
+<p>Recently, I was reading the book <a href="https://www.oreilly.com/library/view/ai-at-the/9781098120191/">“AI at the Edge”</a> by Daniel Situnayake and Jenny Plunkett. In the book they mention an amazing <a href="https://www.eetasia.com/whats-driving-ai-and-vision-to-the-edge/">tool</a> created by Jeff Bier, <strong>BLERP</strong>. This tool consists of five words:</p>
+<ul>
+<li><p>Bandwidth</p></li>
+<li><p>Latency</p></li>
+<li><p>Economics</p></li>
+<li><p>Reliability</p></li>
+<li><p>Privacy</p></li>
+</ul>
+<p>As our spacecraft explore increasingly remote regions of our solar system the need for advanced autonomy increases. It can be easy to use the BLERP tool and realize that deploying AI on spacecraft makes a lot of sense. Our spacecraft will need to make intelligent decisions in real-time when they are far away from Earth making communication difficult, slow, or impossible.</p>
+<p>So with that I wanted to integrate the popular deep learning framework, <a href="https://pytorch.org">PyTorch</a>, with the <a href="https://nasa.github.io/fprime/">NASA F´</a> flight software framework. The F´ framework was developed by NASA’s Jet Propulsion Lab for small spacecraft and the Ingenuity Mars Helicopter project.</p>
 </section>
 <section id="environment-setup" class="level2">
 <h2 class="anchored" data-anchor-id="environment-setup">Environment Setup</h2>
