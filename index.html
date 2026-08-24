@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Mars Exploration Engineering Archive — spacecraft software, autonomy, and distributed systems.">
+  <title>MARS // ENGINEERING ARCHIVE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="brand"><span class="signal"></span> MARS // ENGINEERING ARCHIVE</div>
+    <div class="top-meta">ED-01 / REV 01</div>
+  </header>
+
+  <nav class="nav" aria-label="Main navigation">
+    <a href="#mission">MISSION CONTROL</a>
+    <a href="#systems">SYSTEMS</a>
+    <a href="#projects">PROJECTS</a>
+    <a href="#log">ENGINEERING LOG</a>
+    <a href="#about">ARCHIVE</a>
+  </nav>
+
+  <main>
+    <section id="mission" class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">NATIONAL // SPACE SYSTEMS // SOFTWARE</p>
+        <h1>MARS<br><span>EXPLORATION</span></h1>
+        <p class="lede">
+          An engineering archive focused on spacecraft software,
+          autonomy, embedded systems, and distributed space systems.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#projects">ENTER ARCHIVE →</a>
+          <a class="text-link" href="#log">READ MISSION LOG</a>
+        </div>
+      </div>
+
+      <div class="mars-panel">
+        <div class="panel-label">MARS SURFACE IMAGING / PIXEL ARCHIVE</div>
+        <div class="mars-image-frame">
+          <img src="assets/mars-8bit-hero.png"
+               alt="Retro 8-bit Mars rover scene with a rover on a Martian landscape"
+               class="mars-image">
+        </div>
+        <div class="coordinates">
+          <span>SOL 00417</span>
+          <span>NAVCAM-01 / LIVE</span>
+        </div>
+      </div>
+        <div class="coordinates">
+          <span>LAT 18.4447° N</span>
+          <span>LON 77.4508° E</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="telemetry">
+      <div><span>SYSTEM</span><strong>NOMINAL</strong></div>
+      <div><span>MISSION TIME</span><strong id="missionTime">004:17:32:08</strong></div>
+      <div><span>LINK</span><strong>ACTIVE</strong></div>
+      <div><span>MODE</span><strong>AUTONOMOUS</strong></div>
+    </section>
+
+    <section id="systems" class="section">
+      <div class="section-heading">
+        <span>01</span>
+        <h2>SYSTEMS</h2>
+        <p>CORE ENGINEERING DOMAINS</p>
+      </div>
+
+      <div class="system-grid">
+        <article class="card">
+          <span class="card-index">SYS-01</span>
+          <h3>FLIGHT SOFTWARE</h3>
+          <p>Reliable C++ software for embedded and mission-critical environments, with an emphasis on interfaces, state, testing, and deterministic behavior.</p>
+          <div class="tags"><span>C++</span><span>EMBEDDED</span><span>RTOS</span></div>
+        </article>
+        <article class="card">
+          <span class="card-index">SYS-02</span>
+          <h3>AUTONOMY</h3>
+          <p>Planning, decision-making, machine learning, and fault-aware behaviors for spacecraft and complex autonomous systems.</p>
+          <div class="tags"><span>PLANNING</span><span>ML</span><span>FDIR</span></div>
+        </article>
+        <article class="card">
+          <span class="card-index">SYS-03</span>
+          <h3>DISTRIBUTED SPACE SYSTEMS</h3>
+          <p>Architectures for multiple vehicles and nodes that coordinate, communicate, and operate under constrained links and imperfect information.</p>
+          <div class="tags"><span>DISTRIBUTED</span><span>NETWORKS</span><span>MULTI-AGENT</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="projects" class="section">
+      <div class="section-heading">
+        <span>02</span>
+        <h2>PROJECTS</h2>
+        <p>MISSION HARDWARE / SOFTWARE / EXPERIMENTS</p>
+      </div>
+
+      <div class="project-list">
+        <article class="project">
+          <div class="project-number">P-001</div>
+          <div>
+            <h3>F´ // MICROCONTROLLER PORT</h3>
+            <p>Exploring a port of NASA's F´ flight software framework to a resource-constrained microcontroller, with an IMU interface as the first sensor path.</p>
+            <div class="tags"><span>F´</span><span>TM4C</span><span>MPU6050</span><span>C++</span></div>
+          </div>
+          <a class="project-link" href="#" aria-label="Open project">VIEW →</a>
+        </article>
+
+        <article class="project">
+          <div class="project-number">P-002</div>
+          <div>
+            <h3>FEDERATED SPACECRAFT AUTONOMY</h3>
+            <p>Research and engineering around machine learning across multiple spacecraft, including an ML lifecycle and computer-vision experimentation.</p>
+            <div class="tags"><span>FEDERATED ML</span><span>YOLO</span><span>C++</span><span>PYTHON</span></div>
+          </div>
+          <a class="project-link" href="#" aria-label="Open project">VIEW →</a>
+        </article>
+
+        <article class="project">
+          <div class="project-number">P-003</div>
+          <div>
+            <h3>ORBITAL MECHANICS LAB</h3>
+            <p>A running collection of small simulations and notes for rebuilding the mathematical foundations behind spacecraft motion and guidance.</p>
+            <div class="tags"><span>PYTHON</span><span>ASTRODYNAMICS</span><span>SIMULATION</span></div>
+          </div>
+          <a class="project-link" href="#" aria-label="Open project">VIEW →</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="log" class="section log-section">
+      <div class="section-heading">
+        <span>03</span>
+        <h2>ENGINEERING LOG</h2>
+        <p>FIELD NOTES / THEORY / EXPERIMENTS</p>
+      </div>
+
+      <div class="log-grid">
+        <article class="log-entry">
+          <div class="log-date">LOG 026 // AUG 2026</div>
+          <h3>WHY SPACECRAFT NEED COORDINATE SYSTEMS</h3>
+          <p>ECEF, inertial frames, body frames, and the surprisingly important question: “relative to what?”</p>
+          <a href="#">READ ENTRY →</a>
+        </article>
+        <article class="log-entry">
+          <div class="log-date">LOG 025 // AUG 2026</div>
+          <h3>THE MATHEMATICS OF A FLIGHT SOFTWARE ENGINEER</h3>
+          <p>Rebuilding algebra, trigonometry, calculus, and linear algebra one engineering problem at a time.</p>
+          <a href="#">READ ENTRY →</a>
+        </article>
+        <article class="log-entry">
+          <div class="log-date">LOG 024 // JUL 2026</div>
+          <h3>WHAT MAKES SOFTWARE “FLIGHT” SOFTWARE?</h3>
+          <p>Constraints, failure modes, interfaces, verification, and why reliability changes the way we design.</p>
+          <a href="#">READ ENTRY →</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="about" class="section archive">
+      <div class="section-heading">
+        <span>04</span>
+        <h2>ARCHIVE</h2>
+        <p>PERSONNEL / RECORD / CONTACT</p>
+      </div>
+
+      <div class="archive-grid">
+        <div>
+          <p class="eyebrow">ENGINEERING PERSONNEL</p>
+          <h3>ESTEBAN DURAN</h3>
+          <p>Senior software engineer working in spacecraft autonomy and mission systems. Interested in the intersection of software architecture, embedded systems, mathematics, and spaceflight.</p>
+        </div>
+        <dl>
+          <div><dt>PRIMARY</dt><dd>C++ / SOFTWARE ARCHITECTURE</dd></div>
+          <div><dt>DOMAIN</dt><dd>SPACECRAFT / AUTONOMY</dd></div>
+          <div><dt>INTERESTS</dt><dd>ASTRODYNAMICS / DISTRIBUTED SYSTEMS</dd></div>
+          <div><dt>STATUS</dt><dd><span class="status-dot"></span> BUILDING</dd></div>
+        </dl>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>MARS // ENGINEERING ARCHIVE</div>
+    <div>NO SIGNAL IS FINAL.</div>
+    <div>© <span id="year"></span> ED-01</div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
